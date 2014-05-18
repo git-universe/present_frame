@@ -1,16 +1,20 @@
-Options +FollowSymlinks
+# Necessary to prevent problems when using a controller named "index" and having a root index.php
+# more here: http://httpd.apache.org/docs/2.2/content-negotiation.html
+Options -MultiViews
 
-DirectoryIndex index.php
+# Activates URL rewriting (like myproject.com/controller/action/1/2/3)
+RewriteEngine On
 
-RewriteEngine on
+# Disallows others to look directly into /public/ folder
+Options -Indexes
 
-RewriteRule ^login$ login.php [QSA,L]
+# When using the script within a sub-folder, put this path here, like /mysubfolder/
+# If your app is in the root of your web folder, then leave it commented out
+RewriteBase /present_frame/
 
-# If requested directory, folder or list exists, stop rewrite
+# General rewrite rules
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
 
-# Rewriting request to masterpage with page attribut
-# QSA -> Query String Append
-RewriteRule ^(.*)$ index.php?page=$1 [QSA,L]
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
