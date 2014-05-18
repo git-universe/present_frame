@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>PHP MVC skeleton</title>
+    <title>Present Frame</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
@@ -17,18 +17,28 @@
     <script src="<?php echo URL; ?>public/js/application.js"></script>
 </head>
 <body>
-<!-- header -->
-<div class="container">
-    <!-- navigation -->
-    <h3>Demo Navigation</h3>
-    <div class="navigation">
-        <ul>
-            <!-- same like "home" or "home/index" -->
-            <li><a href="<?php echo URL; ?>"><?php echo URL; ?>home</a></li>
-            <li><a href="<?php echo URL; ?>home/exampleone"><?php echo URL; ?>home/exampleone</a></li>
-            <li><a href="<?php echo URL; ?>home/exampletwo"><?php echo URL; ?>home/exampletwo</a></li>
-            <!-- "songs" and "songs/index" are the same -->
-            <li><a href="<?php echo URL; ?>songs/"><?php echo URL; ?>songs/index</a></li>
-        </ul>
+
+    <div class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="<?php echo URL; ?>">Present Frame</a>
+        </div>
+
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="<?php echo URL; ?>home/exampleone"><?php echo URL; ?>home/exampleone</a></li>
+                <li><a href="<?php echo URL; ?>home/exampletwo"><?php echo URL; ?>home/exampletwo</a></li>
+                <!-- "songs" and "songs/index" are the same -->
+                <li><a href="<?php echo URL; ?>songs/"><?php echo URL; ?>songs/index</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+            </ul>
+        </div>
     </div>
-</div>
