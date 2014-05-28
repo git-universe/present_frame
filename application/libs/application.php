@@ -2,6 +2,9 @@
 
 class Application
 {
+    /** @var null The language */
+    private $language = null;
+
     /** @var null The controller */
     private $url_controller = null;
 
@@ -25,6 +28,19 @@ class Application
     {
         // create array with URL parts in $url
         $this->splitUrl();
+
+        if(!in_array($this->language, unserialize(LANGUAGES))) { 
+            $this->language = LANG;
+        }
+
+        //checks and stores language in session
+        if( !isset($_SESSION['lang']) ) {
+            $_SESSION['lang'] = $this->language;
+        } else if ($this->language != $_SESSION['lang']) {
+            $_SESSION['lang'] = $this->language;
+        }
+
+         //var_dump($_SESSION);
 
         // check for controller: does such a controller exist ?
         if (file_exists('./application/controller/' . $this->url_controller . '.php')) {
@@ -61,6 +77,7 @@ class Application
             $home = new Home();
             $home->index();
         }
+
     }
 
     /**
@@ -78,18 +95,24 @@ class Application
             // Put URL parts into according properties
             // By the way, the syntax here is just a short form of if/else, called "Ternary Operators"
             // @see http://davidwalsh.name/php-shorthand-if-else-ternary-operators
-            $this->url_controller = (isset($url[0]) ? $url[0] : null);
-            $this->url_action = (isset($url[1]) ? $url[1] : null);
-            $this->url_parameter_1 = (isset($url[2]) ? $url[2] : null);
-            $this->url_parameter_2 = (isset($url[3]) ? $url[3] : null);
-            $this->url_parameter_3 = (isset($url[4]) ? $url[4] : null);
+            $this->language = (isset($url[0]) ? $url[0] : null);
+            $this->url_controller = (isset($url[1]) ? $url[1] : null);
+            $this->url_action = (isset($url[2]) ? $url[2] : null);
+            $this->url_parameter_1 = (isset($url[3]) ? $url[3] : null);
+            $this->url_parameter_2 = (isset($url[4]) ? $url[4] : null);
+            $this->url_parameter_3 = (isset($url[5]) ? $url[5] : null);
 
             // for debugging. uncomment this if you have problems with the URL
+            // echo 'Language: ' . $this->language . '<br />';
             // echo 'Controller: ' . $this->url_controller . '<br />';
             // echo 'Action: ' . $this->url_action . '<br />';
             // echo 'Parameter 1: ' . $this->url_parameter_1 . '<br />';
             // echo 'Parameter 2: ' . $this->url_parameter_2 . '<br />';
             // echo 'Parameter 3: ' . $this->url_parameter_3 . '<br />';
         }
+    }
+
+    private function getTransController () {
+        return unserialize(URLTRANS)[$this->url_controller];
     }
 }

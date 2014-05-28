@@ -30,15 +30,41 @@
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="<?php echo URL; ?>home/exampleone"><?php echo URL; ?>home/exampleone</a></li>
-                <li><a href="<?php echo URL; ?>home/exampletwo"><?php echo URL; ?>home/exampletwo</a></li>
-                <!-- "songs" and "songs/index" are the same -->
-                <li><a href="<?php echo URL; ?>songs/"><?php echo URL; ?>songs/index</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <?php echo $lang_model->translate('Language') ?> <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php foreach ($lang_model->getLanguages() as $language) { ?>
+                            <li>
+                                <a href="<?php echo URL . $language->short ?>">
+                                    <?php echo $language->name ?>
+                                </a>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>">
+                        <?php echo $lang_model->translate('Home') ?>
+                    </a>
+                </li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Register</a></li>
+                    <li>
+                        <a href="#">
+                        <?php echo $lang_model->translate('Login') ?>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <?php echo $lang_model->translate('Register') ?>
+                        </a>
+                    </li>
             </ul>
         </div>
     </div>

@@ -16,21 +16,36 @@ class LangModel
 
 
     /**
-     * Add a song to database
-     * @param string $artist Artist
-     * @param string $track Track
-     * @param string $link Link
+     * Translates the passed expresion
+     * @param string $uri Language uri
      */
-    public function addSong($artist, $track, $link)
+    public function translate($expression)
     {
-        // clean the input from javascript code for example
-        $artist = strip_tags($artist);
-        $track = strip_tags($track);
-        $link = strip_tags($link);
+        if ($_SESSION['lang'] == LANG) {
+            return $expression;
+        } else {
+            $sql = "SELECT t.translation
+                    FROM translations t
+                    JOIN languages l ON t.languages_id = l.id
+                    LEFT OUTER JOIN translations tr ON tr.id = t.translations_id
+                    WHERE tr.translation = :expr AND l.short = :lang";
+            $query = $this->db->prepare($sql);
+            $query->execute( array(':expr' => $expression, ':lang' => $_SESSION['lang']) );
+            return $query->fetch()->translation;
+        }
+    }
 
-        $sql = "INSERT INTO song (artist, track, link) VALUES (:artist, :track, :link)";
+
+    /**
+     * Returns all languages
+     */
+    public function getLanguages()
+    {
+        $sql = "SELECT * FROM languages";
+        
         $query = $this->db->prepare($sql);
-        $query->execute(array(':artist' => $artist, ':track' => $track, ':link' => $link));
+        $query->execute();
+        return $query->fetchAll();
     }
 
 }

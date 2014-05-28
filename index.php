@@ -22,5 +22,12 @@ require 'application/config/config.php';
 require 'application/libs/application.php';
 require 'application/libs/controller.php';
 
+//check for session and start it
+if( !isset($_SESSION) ){
+	session_start();
+}
+
+//var_dump($_SESSION);
+
 // start the application
 $app = new Application();
