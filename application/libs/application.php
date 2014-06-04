@@ -40,7 +40,7 @@ class Application
             $_SESSION['lang'] = $this->language;
         }
 
-         //var_dump($_SESSION);
+        var_dump($_SESSION);
 
         // check for controller: does such a controller exist ?
         if (file_exists('./application/controller/' . $this->url_controller . '.php')) {

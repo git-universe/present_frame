@@ -40,3 +40,6 @@ define('LANGUAGES', serialize (
 		"si"
 	))
 );
+
+define('PASSWORD_BCRYPT', 1);
+define('PASSWORD_DEFAULT', PASSWORD_BCRYPT);

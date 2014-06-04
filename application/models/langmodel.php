@@ -47,5 +47,18 @@ class LangModel
         $query->execute();
         return $query->fetchAll();
     }
+    
+
+    /**
+     * Returns correct link for passed language
+     * @param string $newLang Language requred for link transfrom
+     */
+    public function linkTransform($newLang)
+    {
+        $uri = str_replace ("/".$_SESSION['lang'], "/".$newLang, $_SERVER["REQUEST_URI"]);
+        $url = "//".$_SERVER["SERVER_NAME"] . $uri;
+
+        return $url;
+    }
 
 }

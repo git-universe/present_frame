@@ -25,46 +25,62 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo URL; ?>">Present Frame</a>
+            <a class="navbar-brand" href="<?php echo URL.$_SESSION['lang']; ?>">Present Frame</a>
         </div>
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <?php echo $lang_model->translate('Language') ?> <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <?php foreach ($lang_model->getLanguages() as $language) { ?>
-                            <li>
-                                <a href="<?php echo URL . $language->short ?>">
-                                    <?php echo $language->name ?>
-                                </a>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                </li>
-
-                <li>
+                 <li>
                     <a href="<?php echo URL . $_SESSION['lang']; ?>">
-                        <?php echo $lang_model->translate('Home') ?>
+                        link1
                     </a>
                 </li>
 
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="<?php echo URL."public/img/flags/".$_SESSION['lang'].".png"; ?>" height="24px" /> <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php foreach ($lang_model->getLanguages() as $language) { ?>
+                            <li>
+                                <a href="<?php echo $lang_model->linkTransform($language->short) ?>">
+                                    <img src="<?php echo URL."public/img/flags/".$language->short.".png"; ?>" height="10px" />
+                                    <?php echo $language->name ?> 
+                                </a>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </li>
+
+                <?php if ( isset($_SESSION['username']) ) { ?> <!-- IF user is logedin -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                            <?php echo $lang_model->translate('Wellcome') . ' ' . $_SESSION['username']; ?> <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo URL . $_SESSION['lang']; ?>/login/logout">
+                                <?php echo $lang_model->translate('Logout'); ?>
+                            </a></li>
+                        </ul>
+                    </li>
+                <?php } else { ?> <!-- IF user is not loggedin -->
                     <li>
-                        <a href="#">
+                        <a href="<?php echo URL . $_SESSION['lang']; ?>/login">
                         <?php echo $lang_model->translate('Login') ?>
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="<?php echo URL . $_SESSION['lang']; ?>/register">
                             <?php echo $lang_model->translate('Register') ?>
                         </a>
                     </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
