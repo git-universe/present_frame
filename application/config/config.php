@@ -37,7 +37,8 @@ define('DB_PASS', '');
 define('LANGUAGES', serialize ( 
 	array (
 		"en",
-		"si"
+		"si",
+		"de"
 	))
 );
 

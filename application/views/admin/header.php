@@ -9,12 +9,17 @@
     <!-- css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cyborg/bootstrap.min.css">
     <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
+    <link href="<?php echo URL; ?>public/css/codemirror.css" rel="stylesheet">
+    <link href="<?php echo URL; ?>public/css/monokai.css" rel="stylesheet">
+
     <!-- jQuery -->
-    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <!-- our JavaScript -->
-    <script src="<?php echo URL; ?>public/js/application.js"></script>
+    <!-- Codemirror -->
+    <script src="<?php echo URL; ?>public/js/codemirror.js"></script>
+    <!-- htmlmixed mode for codemirror -->
+    <script src="<?php echo URL; ?>public/js/xml.js"></script>
 </head>
 <body>
 
@@ -30,9 +35,14 @@
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
+                <li>
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>/admin">
+                        Overview
+                    </a>
+                </li>
                  <li>
-                    <a href="<?php echo URL . $_SESSION['lang']; ?>">
-                        link1
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>/admin/pages">
+                        Edit pages
                     </a>
                 </li>
 
@@ -55,40 +65,11 @@
                     </ul>
                 </li>
 
-                <?php if ( isset($_SESSION['username']) ) { ?> <!-- IF user is logedin -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
-                            <?php echo $lang_model->translate('Wellcome') . ' ' . $_SESSION['username']; ?> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <?php if( $_SESSION['admin'] == true ) { ?>
-                                <li>
-                                    <a href="<?php echo URL . $_SESSION['lang']; ?>/admin">
-                                        <?php echo $lang_model->translate('Administration panel'); ?>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                            <?php } ?>
-                            <li><a href="#">Action</a></li>
-                            <li class="divider"></li>
-                            <li><a href="<?php echo URL . $_SESSION['lang']; ?>/login/logout">
-                                <?php echo $lang_model->translate('Logout'); ?>
-                            </a></li>
-                        </ul>
-                    </li>
-                <?php } else { ?> <!-- IF user is not loggedin -->
-                    <li>
-                        <a href="<?php echo URL . $_SESSION['lang']; ?>/login">
-                        <?php echo $lang_model->translate('Login') ?>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="<?php echo URL . $_SESSION['lang']; ?>/register">
-                            <?php echo $lang_model->translate('Register') ?>
-                        </a>
-                    </li>
-                <?php } ?>
+                <li>
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>">
+                        To home page
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

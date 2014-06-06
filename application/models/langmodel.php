@@ -24,14 +24,21 @@ class LangModel
         if ($_SESSION['lang'] == LANG) {
             return $expression;
         } else {
-            $sql = "SELECT t.translation
+            $sql = "SELECT COALESCE(t.translation, 'N/A' ) AS translation
                     FROM translations t
                     JOIN languages l ON t.languages_id = l.id
                     LEFT OUTER JOIN translations tr ON tr.id = t.translations_id
                     WHERE tr.translation = :expr AND l.short = :lang";
             $query = $this->db->prepare($sql);
             $query->execute( array(':expr' => $expression, ':lang' => $_SESSION['lang']) );
-            return $query->fetch()->translation;
+
+            $result = $query->fetch();
+
+            if (!$result) {
+                return "Translation N/A";
+            } else {
+                return $result->translation;
+            }
         }
     }
 
@@ -59,6 +66,23 @@ class LangModel
         $url = "//".$_SERVER["SERVER_NAME"] . $uri;
 
         return $url;
+    }
+
+    function isLanguage($short) {
+        $short = strip_tags($short);
+
+        $sql = "SELECT *
+                FROM languages
+                WHERE short = :short;";
+
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':short' => $short) );
+
+        if( $query->rowCount() > 0 ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
