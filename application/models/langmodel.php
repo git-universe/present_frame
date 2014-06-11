@@ -68,7 +68,7 @@ class LangModel
         return $url;
     }
 
-    function isLanguage($short) {
+    public function isLanguage($short) {
         $short = strip_tags($short);
 
         $sql = "SELECT *
@@ -83,6 +83,63 @@ class LangModel
         } else {
             return false;
         }
+    }
+
+    public function getCategoryTranslation($categoryId, $lang) {
+        $categoryId = strip_tags($categoryId);
+
+        $sql = "SELECT ct.id, ct.name, l.short FROM category_translation ct
+                INNER JOIN languages l ON l.id = ct.languages_id
+                WHERE ct.categories_id = :catId AND l.short = :lang;";
+
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':catId' => $categoryId, ':lang' => $lang) );
+        $res = $query->fetch();
+
+        if ( isset($res->name) ) {
+            return $res->name;
+        } else {
+            return "";
+        }
+       
+    }
+
+    private function hasCategoryTranslation($catId, $langId) {
+        $catId = strip_tags($catId);
+        $langId = strip_tags($langId);
+
+        $sql = "SELECT * FROM category_translation ct
+                INNER JOIN languages l ON l.id = ct.languages_id
+                WHERE ct.categories_id = :catId AND l.id = :langId;";
+
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':catId' => $catId, ':langId' => $langId) );
+        
+        if( $query->rowCount() > 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setCategoryTranslation($translation, $catId, $langId){  
+        $translation = strip_tags($translation);
+        $catId = strip_tags($catId);
+        $langId = strip_tags($langId);
+
+        if ( $this->hasCategoryTranslation($catId, $langId) ) {
+            $sql = "UPDATE `category_translation`
+                    SET `name` = :name
+                    WHERE `languages_id` = :langId 
+                    AND `categories_id` = :catId;";
+        } else {
+            $sql = "INSERT INTO `category_translation`
+                    (`id`, `name`, `languages_id`, `categories_id`)
+                    VALUES (null, :name, :langId, :catId);";
+        }
+
+        $query = $this->db->prepare($sql);
+        return $query->execute( array(':name' => $translation, ':catId' => $catId, ':langId' => $langId) );
     }
 
 }

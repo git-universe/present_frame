@@ -5,5 +5,11 @@
 		<a href="<?php echo URL . $_SESSION['lang']; ?>/admin/pages" class="list-group-item">
 	    	Edit pages
 	 	</a>
+	 	<a href="<?php echo URL . $_SESSION['lang']; ?>/admin/categories" class="list-group-item">
+	    	Edit categories
+	 	</a>
+	 	<a href="<?php echo URL . $_SESSION['lang']; ?>/admin/presentations" class="list-group-item">
+	    	Edit presentations
+	 	</a>
 	</div>
 </div>

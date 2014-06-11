@@ -10,11 +10,9 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cyborg/bootstrap.min.css">
     <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
     <!-- jQuery -->
-    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <!-- Bootstrap -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <!-- our JavaScript -->
-    <script src="<?php echo URL; ?>public/js/application.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.js"></script>
 </head>
 <body>
 
@@ -31,8 +29,8 @@
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
                  <li>
-                    <a href="<?php echo URL . $_SESSION['lang']; ?>">
-                        link1
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>/presentations">
+                        <?php echo $lang_model->translate('Presentations'); ?>
                     </a>
                 </li>
 
@@ -67,9 +65,7 @@
                                         <?php echo $lang_model->translate('Administration panel'); ?>
                                     </a>
                                 </li>
-                                <li class="divider"></li>
                             <?php } ?>
-                            <li><a href="#">Action</a></li>
                             <li class="divider"></li>
                             <li><a href="<?php echo URL . $_SESSION['lang']; ?>/login/logout">
                                 <?php echo $lang_model->translate('Logout'); ?>

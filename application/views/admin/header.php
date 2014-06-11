@@ -13,7 +13,7 @@
     <link href="<?php echo URL; ?>public/css/monokai.css" rel="stylesheet">
 
     <!-- jQuery -->
-     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <!-- Codemirror -->
@@ -35,14 +35,22 @@
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
+                
                 <li>
-                    <a href="<?php echo URL . $_SESSION['lang']; ?>/admin">
-                        Overview
-                    </a>
-                </li>
-                 <li>
                     <a href="<?php echo URL . $_SESSION['lang']; ?>/admin/pages">
                         Edit pages
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>/admin/categories">
+                        Edit categories
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>/admin/presentations">
+                        Edit presentations
                     </a>
                 </li>
 

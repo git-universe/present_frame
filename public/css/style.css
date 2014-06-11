@@ -30,3 +30,8 @@ table {
 .jumbotron {
     background-color: rgba(21, 21, 21, 0.6);
 }
+
+.panel-heading span {
+  margin-top: -20px;
+  font-size: 15px;
+}
