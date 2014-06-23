@@ -252,7 +252,7 @@ class Admin extends Controller
         $slide_model = $this->loadModel('SlideModel');
 
         if(isset($_POST['form_type'])) {
-            var_dump($_POST);
+            //var_dump($_POST);
 
             if( $_POST['form_type'] == "edit_slide" ) {
                 $slide_model->updateSlide($_POST['slide_priority'], $_POST['slide_content'], $id);

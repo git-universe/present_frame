@@ -20,7 +20,7 @@
   <link rel="stylesheet" media="screen" href="<?php echo URL; ?>public/lib/deck.js/extensions/scale/deck.scale.css">
 
   <!-- Style theme. More available in /themes/style/ or create your own. -->
-  <link rel="stylesheet" media="screen" href="<?php echo URL; ?>public/lib/deck.js/themes/style/web-2.0.css">
+  <link rel="stylesheet" media="screen" href="<?php echo URL; ?>public/lib/deck.js/themes/style/present_frame.css">
 
   <!-- Transition theme. More available in /themes/transition/ or create your own. -->
   <link rel="stylesheet" media="screen" href="<?php echo URL; ?>public/lib/deck.js/themes/transition/horizontal-slide.css">

@@ -23,6 +23,8 @@
     <script src="<?php echo URL; ?>public/js/codemirror.js"></script>
     <!-- htmlmixed mode for codemirror -->
     <script src="<?php echo URL; ?>public/js/xml.js"></script>
+
+    <link rel="shortcut icon" href="<?php echo URL; ?>public/img/favicon.ico" />
 </head>
 <body>
 
@@ -33,7 +35,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo URL.$_SESSION['lang']; ?>">Present Frame</a>
+            <a class="navbar-brand" href="<?php echo URL.$_SESSION['lang']; ?>">
+                <img style="width: 24px;" src="<?php echo URL; ?>public/img/logo.png"> </img>
+                &nbsp; Present Frame
+            </a>
         </div>
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">

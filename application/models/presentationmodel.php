@@ -113,7 +113,7 @@ class PresentationModel
                 FROM presentations
                 WHERE categories_id = :catId";
 
-        if($langId != null && is_int($langId)) $sql = $sql . " AND languages_id = :langId";
+        if($langId != null && is_numeric($langId)) $sql = $sql . " AND languages_id = :langId";
         else if(is_string($langId)) $sql = $sql . " AND languages_id = (SELECT id FROM languages WHERE short = :langId)";
 
         $query = $this->db->prepare($sql);

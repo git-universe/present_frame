@@ -35,3 +35,9 @@ table {
   margin-top: -20px;
   font-size: 15px;
 }
+
+.deck-frame{
+    -webkit-box-shadow: 0 6px 14px 10px rgba(0,0,0,0.4);
+    box-shadow: 0 6px 14px 10px rgba(0,0,0,0.4);
+    padding: 0;
+}
