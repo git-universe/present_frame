@@ -7,12 +7,15 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cyborg/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cyborg/bootstrap.min.css"><!--  - Online -->
+    <!-- <link rel="stylesheet" href="<?php echo URL; ?>public/offline/bootstrap.min.css"> -->
     <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
     <!-- jQuery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script><!--  - Online -->
+    <!-- <script src="<?php echo URL; ?>public/offline/jquery.js"></script> -->
     <!-- Bootstrap -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.js"></script><!--  - Online -->
+    <!-- <script src="<?php echo URL; ?>public/offline/bootstrap.js"></script> -->
 </head>
 <body>
 
@@ -28,9 +31,17 @@
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                 <li>
+                <?php foreach ($menuCategories as &$c) { ?>
+                    <li>
+                        <a href="<?php echo URL . $_SESSION['lang'] . '/presentations/category/' . $c->id ?>">
+                            <?php echo $c->name; ?>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <li>
                     <a href="<?php echo URL . $_SESSION['lang']; ?>/presentations">
-                        <?php echo $lang_model->translate('Presentations'); ?>
+                        <?php echo $lang_model->translate('All presentations'); ?>
                     </a>
                 </li>
 

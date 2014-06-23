@@ -18,8 +18,10 @@ class Home extends Controller
     {
         $home_model = $this->loadModel('HomeModel');
         $lang_model = $this->loadModel('LangModel');
+        $cat_model = $this->loadModel('CategoryModel');
 
         $page = $home_model->getHomePage($_SESSION['lang']);
+        $menuCategories = $cat_model->getMenuCategories($_SESSION['lang']);
 
         require 'application/views/_templates/header.php';
         require 'application/views/home/index.php';

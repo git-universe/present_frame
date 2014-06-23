@@ -10,12 +10,13 @@
  */
 class Presentations extends Controller
 {
-
     public function index()
     {
         $lang_model = $this->loadModel('LangModel');
         $cat_model = $this->loadModel('CategoryModel');
+        $present_model = $this->loadModel('PresentationModel');
 
+        $menuCategories = $cat_model->getMenuCategories($_SESSION['lang']);
         $categories = $cat_model->getCategories();
         
         require 'application/views/_templates/header.php';
@@ -25,6 +26,10 @@ class Presentations extends Controller
 
     public function presentation($id = 0, $fullPage = false) {
         $lang_model = $this->loadModel('LangModel');
+        $cat_model = $this->loadModel('CategoryModel');
+
+        $menuCategories = $cat_model->getMenuCategories($_SESSION['lang']);
+
         if ($fullPage == 'full') {
             require 'application/views/presentations/presentation.php';
         } else {
@@ -32,5 +37,20 @@ class Presentations extends Controller
             require 'application/views/presentations/presentation-page.php';
             require 'application/views/_templates/footer.php';
         }
+    }
+
+    public function category($id = 0) {
+        $lang_model = $this->loadModel('LangModel');
+        $cat_model = $this->loadModel('CategoryModel');
+        $present_model = $this->loadModel('PresentationModel');
+
+
+        $menuCategories = $cat_model->getMenuCategories($_SESSION['lang']);
+        $categories = $cat_model->getCategories();
+        $details = $cat_model->getCategoryTranslations($id, $_SESSION['lang'])[0];
+
+        require 'application/views/_templates/header.php';
+        require 'application/views/presentations/category.php';
+        require 'application/views/_templates/footer.php';
     }
 }

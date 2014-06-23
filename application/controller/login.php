@@ -15,6 +15,9 @@ class Login extends Controller
     {
         $lang_model = $this->loadModel('LangModel');
         $reg_model = $this->loadModel('RegisterModel');
+        $cat_model = $this->loadModel('CategoryModel');
+
+        $menuCategories = $cat_model->getMenuCategories($_SESSION['lang']);
 
         /**
          * @var array $errors Collection of error messages

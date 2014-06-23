@@ -7,15 +7,18 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cyborg/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cyborg/bootstrap.min.css"> <!--  - Online -->
+    <!-- <link rel="stylesheet" href="<?php echo URL; ?>public/offline/bootstrap.min.css">-->
     <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
     <link href="<?php echo URL; ?>public/css/codemirror.css" rel="stylesheet">
     <link href="<?php echo URL; ?>public/css/monokai.css" rel="stylesheet">
 
     <!-- jQuery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script><!--  - Online -->
+    <!-- <script src="<?php echo URL; ?>public/offline/jquery.min.js"></script> -->
     <!-- Bootstrap -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.js"></script><!--  - Online -->
+    <!-- <script src="<?php echo URL; ?>public/offline/bootstrap.js"></script> -->
     <!-- Codemirror -->
     <script src="<?php echo URL; ?>public/js/codemirror.js"></script>
     <!-- htmlmixed mode for codemirror -->

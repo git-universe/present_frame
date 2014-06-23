@@ -1,15 +1,24 @@
 <div class="container">
-	<h1>Presentations</h1>
-	<hr/>
-
 	<?php foreach ($categories as &$cat) { 
 		if ( is_null($cat->parent_id) ) { ?>
 			<h2>
 				<?php echo $cat->name; ?>
 			</h2>
 
-			<?php foreach ($categories as &$c) { 
-				if ($c->parent_id == $cat->id) { ?>
+			<ul>
+          		<?php $presentations = $present_model->getPresentations($cat->id, $_SESSION['lang']); ?>
+          		<?php foreach ($presentations as &$p) { ?>
+          			<li>
+	          			<a href="<?php echo URL . $_SESSION['lang'] . '/presentations/presentation/' . $p->id;?>">
+	          				<?php echo $p->name ?>
+	      				</a>
+	      			</li>
+          		<?php } ?>
+          	</ul>
+
+			<?php foreach ($categories as &$c) { ?>
+				<?php $presentations = $present_model->getPresentations($c->id, $_SESSION['lang']); ?>
+				<?php if ( $c->parent_id == $cat->id && count($presentations) > 0 ) { ?>
 					
 					<div class="panel panel-default">
 						<div class="panel-heading clickable">
@@ -18,13 +27,18 @@
 						</div>
 						<div class="panel-body">
 		                	<ul>
-		                  		<li>Presentation1</li>
-		                  		<li>Presentation1</li>
+		                  		<?php foreach ($presentations as &$p) { ?>
+			                  		<li>
+			                  			<a href="<?php echo URL . $_SESSION['lang'] . '/presentations/presentation/' . $p->id;?>">
+			                  				<?php echo $p->name ?>
+		                  				</a>
+		                  			</li>
+		                  		<?php } ?>
 		                  	</ul>
 		              	</div>
 					</div>
 
-				<?php } ?>
+				<?php }  ?>
 			<?php } ?>
 
 			<hr/>

@@ -14,11 +14,6 @@ class CategoryModel
         }
     }
 
-
-    /**
-     * Gets the homepage content for selected language
-     * @param string $uri Language uri
-     */
     public function getCategories($lang = 'en')
     {
 
@@ -185,16 +180,38 @@ class CategoryModel
         return $query->fetchAll();
     }
 
-    public function getCategoryTranslations($id){
+    public function getCategoryTranslations($id, $lang = null){
         $id = strip_tags($id);
+        $lang = strip_tags($lang);
 
         $sql = "SELECT c.id, c.parent_id, ct.name, l.short
                 FROM categories c
                 INNER JOIN category_translation ct ON c.id = ct.categories_id
                 INNER JOIN languages l ON l.id = ct.languages_id
-                WHERE c.id = :id;";
+                WHERE c.id = :id";
+
+        if($lang != null) $sql .= ' AND l.short = :lang';
+
         $query = $this->db->prepare($sql);
-        $query->execute( array(':id' => $id) );
+        if($lang != null) $query->execute( array(':id' => $id, ':lang' => $lang) );
+        else $query->execute( array(':id' => $id) );
+        return $query->fetchAll();
+    }
+
+    public function getMenuCategories($lang) {
+        $lang = strip_tags($lang);
+
+        $sql = "SELECT c.id, c.parent_id, ct.name
+                FROM categories c
+                INNER JOIN category_translation ct ON c.id = ct.categories_id
+                INNER JOIN languages l ON l.id = ct.languages_id
+                WHERE l.short = :lang AND c.parent_id IS NULL
+                AND ( (SELECT IF(COUNT(id) > 0,true,false) FROM presentations WHERE categories_id = c.id) 
+                    OR (SELECT IF(COUNT(id) > 0,true,false) FROM categories WHERE parent_id = c.id) )
+                ORDER BY priority;";
+
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':lang' => $lang) );
         return $query->fetchAll();
     }
 }
