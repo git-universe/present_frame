@@ -5,7 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=1024, user-scalable=no">
 
-  <title>Your deck.js Presentation</title>
+  <title>
+    <?php echo $details->name ?>
+  </title>
 
   <!-- Required stylesheet -->
   <link rel="stylesheet" href="<?php echo URL; ?>public/lib/deck.js/deck.core.css">
@@ -34,27 +36,20 @@
   <div class="deck-container deck-scale on-slide-title-slide on-slide-0">
 
     <!-- Begin slides -->
-    <section class="slide">
-      <h1>Getting Started with deck.js</h1>
-    </section>
 
-    <section class="slide" >
-      <h2>How to Make a Deck</h2>
-      <ol>
-        <li class="slide">
-          <h3>Write Slides</h3>
-          <p>Slide content is simple&nbsp;HTML.</p>
-        </li>
-        <li class="slide">
-          <h3>Choose Themes</h3>
-          <p>One for slide styles and one for deck&nbsp;transitions.</p>
-        </li>
-        <li class="slide">
-          <h3>Include Extensions</h3>
-          <p>Add extra functionality to your deck, or leave it stripped&nbsp;down.</p>
-        </li>
-      </ol>
-    </section>
+    <?php foreach ($slides as &$s) { ?>
+      <section class="slide">
+        <?php echo $s->content ?>
+      </section>
+    <?php } ?>
+
+    <?php if(count($slides) == 0) { ?>
+      <section class="slide">
+        <h1>
+          <?php echo $lang_model->translate('This presentation has no slides!') ?>
+        </h1>
+      </section>
+    <?php } ?>
 
     <!-- Begin extension snippets. Add or remove as needed. -->
 

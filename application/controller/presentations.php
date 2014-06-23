@@ -27,10 +27,15 @@ class Presentations extends Controller
     public function presentation($id = 0, $fullPage = false) {
         $lang_model = $this->loadModel('LangModel');
         $cat_model = $this->loadModel('CategoryModel');
+        $present_model = $this->loadModel('PresentationModel');
+        $slide_model = $this->loadModel('SlideModel');
 
         $menuCategories = $cat_model->getMenuCategories($_SESSION['lang']);
+        $details = $present_model->getDetails($id);
 
         if ($fullPage == 'full') {
+             $slides = $slide_model->getSlides($id);
+
             require 'application/views/presentations/presentation.php';
         } else {
             require 'application/views/_templates/header.php';
