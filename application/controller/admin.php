@@ -89,6 +89,7 @@ class Admin extends Controller
         $cat_model = $this->loadModel('CategoryModel');
 
         $categories = $cat_model->getCategories();
+        $languages = $lang_model->getLanguages();
 
         require 'application/views/admin/header.php';
         require 'application/views/admin/categories.php';

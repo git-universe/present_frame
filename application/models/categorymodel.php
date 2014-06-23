@@ -184,4 +184,17 @@ class CategoryModel
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function getCategoryTranslations($id){
+        $id = strip_tags($id);
+
+        $sql = "SELECT c.id, c.parent_id, ct.name, l.short
+                FROM categories c
+                INNER JOIN category_translation ct ON c.id = ct.categories_id
+                INNER JOIN languages l ON l.id = ct.languages_id
+                WHERE c.id = :id;";
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':id' => $id) );
+        return $query->fetchAll();
+    }
 }
