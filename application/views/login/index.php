@@ -22,19 +22,19 @@
 		    </legend>
 
 			<div class="form-group">
-		    	<label for="login_input_username" class="col-lg-3 col-lg-offset-3 control-label">
+		    	<label for="login_input_username" class="col-lg-3 col-lg-offset-2 control-label">
 		    		<?php echo $lang_model->translate('Username') ?>
 		    	</label>
-			    <div class="col-lg-3">
+			    <div class="col-lg-4">
 			    	<input id="login_input_username" class="form-control" type="text" pattern="[a-zA-Z0-9]{2,32}" name="user_name" required />
 			    </div>
 		    </div>
 		    
 		    <div class="form-group">
-		    	<label for="login_input_password_new" class="col-lg-3 col-lg-offset-3 control-label">
+		    	<label for="login_input_password_new" class="col-lg-3 col-lg-offset-2 control-label">
 		    		<?php echo $lang_model->translate('Password') ?>
 	    		</label>
-			    <div class="col-lg-3">
+			    <div class="col-lg-4">
 			    	<input id="login_input_password_new" class="form-control" type="password"  name="user_password" pattern=".{6,}" required autocomplete="off" />
 			    </div>
 		    </div>
