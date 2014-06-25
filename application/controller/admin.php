@@ -109,8 +109,6 @@ class Admin extends Controller
         if(isset($_POST['form_type'])) {
             //var_dump($_POST);
 
-            $langId = $id;
-
             if($_POST['form_type'] == "new_category") {
                 $temp = $cat_model->insertCategory($_POST['category_name'], $_POST['category_priority'], $_POST['category_parent']);
 
@@ -133,7 +131,7 @@ class Admin extends Controller
 
             if (count($errors) == 0) {
                 foreach ($languages as &$l) {
-                    if ( !$lang_model->setCategoryTranslation($_POST['category_name_' . $l->short], $langId, $l->id) ) {
+                    if ( !$lang_model->setCategoryTranslation($_POST['category_name_' . $l->short], $id, $l->id) ) {
                         array_push($errors, 'Could not update translation for '. $l->short .' language!');
                     } else {
                         array_push($messages, 'Successfully updated translation for '. $l->short .' language.');
