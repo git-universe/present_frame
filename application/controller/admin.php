@@ -12,7 +12,7 @@ class Admin extends Controller
 {
 
     function __construct() {
-        if(!isset($_SESSION['admin']) || $_SESSION['admin'] == false) {
+        if(!isset($_SESSION['username']) ) {
             header("Location: " . URL . $_SESSION['lang']);
             die();
         }
@@ -22,6 +22,7 @@ class Admin extends Controller
 
     public function index()
     {
+        //var_dump($_SESSION);
         $lang_model = $this->loadModel('LangModel');
 
         require 'application/views/admin/header.php';

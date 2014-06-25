@@ -1,6 +1,6 @@
 <?php
 
-class RegisterModel
+class UserModel
 {
     /**
      * Every model needs a database connection, passed to the model
@@ -81,6 +81,38 @@ class RegisterModel
             return false;
         }
     }
+
+    function getUserDetails($userName) {
+        $userName = strip_tags($userName);
+
+        $sql = "SELECT u.id, u.username, u.email, u.create_time FROM users u WHERE u.username = :userName";
+
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':userName' => $userName) );
+
+        return $query->fetch();
+    }
+
+    function setUserDetails($id, $uname, $email) {
+        $uname = strip_tags($uname);
+        $email = strip_tags($email);
+
+        $sql = "UPDATE `present_frame`.`users` SET `username` = :uname, `email` = :email
+            WHERE `id` = :id";
+
+        $query = $this->db->prepare($sql);
+        return $query->execute( array(':uname' => $uname, ':email' => $email, ':id' => $id) );
+    }
+
+    function setPassword($id, $pass) {
+        $pass = strip_tags($pass);
+
+         $sql = "UPDATE `present_frame`.`users` SET `pass_hash` = :pass WHERE `id` = :id";
+
+        $query = $this->db->prepare($sql);
+        return $query->execute( array(':pass' => $pass, ':id' => $id) );
+    }
+    
 
     /**
      * Hash the password using the specified algorithm
@@ -287,5 +319,4 @@ class RegisterModel
 
         return $status === 0;
     }
-    
 }

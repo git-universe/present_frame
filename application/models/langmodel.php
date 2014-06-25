@@ -35,7 +35,7 @@ class LangModel
             $result = $query->fetch();
 
             if (!$result) {
-                return "Translation N/A";
+                return "(" . $expression . ") translation N/A";
             } else {
                 return $result->translation;
             }

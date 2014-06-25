@@ -14,7 +14,7 @@ class Register extends Controller
     public function index()
     {
         $lang_model = $this->loadModel('LangModel');
-        $reg_model = $this->loadModel('RegisterModel');
+        $reg_model = $this->loadModel('UserModel');
         $cat_model = $this->loadModel('CategoryModel');
 
         $menuCategories = $cat_model->getMenuCategories($_SESSION['lang']);
