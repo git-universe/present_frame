@@ -125,4 +125,21 @@ class PresentationModel
         }
         return $query->fetchAll();
     }
+
+    public function getPresentationsWithDetails($lang) {
+        $lang = strip_tags($lang);
+
+        $sql = "SELECT p.id AS present_id, p.name, p.desc, c.id AS cat_id, ct.name AS category,
+                (SELECT COUNT(id) FROM slides WHERE presentations_id = p.id) AS slides
+                FROM presentations p
+                INNER JOIN categories c ON c.id = p.categories_id
+                INNER JOIN category_translation ct ON ct.categories_id = c.id
+                WHERE p.languages_id = (SELECT id FROM languages WHERE short = :lang)
+                AND ct.languages_id = (SELECT id FROM languages WHERE short = :lang);";
+
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':lang' => $lang, ':lang' => $lang) );
+
+        return $query->fetchAll();
+    }
 }

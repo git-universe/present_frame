@@ -214,4 +214,19 @@ class CategoryModel
         $query->execute( array(':lang' => $lang) );
         return $query->fetchAll();
     }
+
+    public function getFullCategories($lang) {
+        $lang = strip_tags($lang);
+
+        $sql = "SELECT c.id, ct.name FROM categories c
+                INNER JOIN category_translation ct ON ct.categories_id = c.id
+                WHERE  (SELECT IF(COUNT(id) > 0,true,false) FROM presentations WHERE categories_id = c.id)
+                AND ct.languages_id = (SELECT id FROM languages WHERE short = :lang);";
+
+        $query = $this->db->prepare($sql);
+        
+        $query->execute( array(':lang' => $lang) );
+
+        return $query->fetchAll();
+    }
 }

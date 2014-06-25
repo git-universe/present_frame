@@ -16,8 +16,9 @@ class Presentations extends Controller
         $cat_model = $this->loadModel('CategoryModel');
         $present_model = $this->loadModel('PresentationModel');
 
-        $menuCategories = $cat_model->getMenuCategories($_SESSION['lang']);
-        $categories = $cat_model->getCategories();
+        $menuCategories = $cat_model->getMenuCategories( $_SESSION['lang'] );
+        $categories = $cat_model->getFullCategories( $_SESSION['lang'] );
+        $presentations = $present_model->getPresentationsWithDetails( $_SESSION['lang'] );
         
         require 'application/views/_templates/header.php';
         require 'application/views/presentations/index.php';
