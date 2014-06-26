@@ -85,7 +85,7 @@ class UserModel
     function getUserDetails($userName) {
         $userName = strip_tags($userName);
 
-        $sql = "SELECT u.id, u.username, u.email, u.create_time FROM users u WHERE u.username = :userName";
+        $sql = "SELECT u.id, u.username, u.email, u.create_time, u.admin, u.disabled FROM users u WHERE u.username = :userName";
 
         $query = $this->db->prepare($sql);
         $query->execute( array(':userName' => $userName) );
@@ -93,24 +93,81 @@ class UserModel
         return $query->fetch();
     }
 
-    function setUserDetails($id, $uname, $email) {
-        $uname = strip_tags($uname);
-        $email = strip_tags($email);
+    function getUserDetailsById($id) {
+        $id = strip_tags($id);
 
-        $sql = "UPDATE `present_frame`.`users` SET `username` = :uname, `email` = :email
-            WHERE `id` = :id";
+        $sql = "SELECT u.id, u.username, u.email, u.create_time, u.admin, u.disabled FROM users u WHERE u.id = :id";
 
         $query = $this->db->prepare($sql);
-        return $query->execute( array(':uname' => $uname, ':email' => $email, ':id' => $id) );
+        $query->execute( array(':id' => $id) );
+
+        return $query->fetch();
+    }
+
+    function setUserDetails($id, $uname, $email, $admin = null, $disabled = null) {
+        $uname = strip_tags($uname);
+        $email = strip_tags($email);
+        $admin = strip_tags($admin);
+        $disabled = strip_tags($disabled);
+
+        $data = array();
+
+        if($admin == null && $disabled == null) {
+            $sql = "UPDATE `present_frame`.`users` SET `username` = :uname, `email` = :email
+                WHERE `id` = :id;";
+            $query = $this->db->prepare($sql);
+            return $query->execute( array(':uname' => $uname, ':email' => $email, ':id' => $id) );
+        } else {
+            $sql = "UPDATE `present_frame`.`users` 
+                SET `username` = :uname, `email` = :email, `admin` = :admin, `disabled` = :disabled
+                WHERE `id` = :id;";
+            $query = $this->db->prepare($sql);
+            return $query->execute( array(':uname' => $uname, ':email' => $email, ':admin' => $admin, ':disabled' => $disabled, ':id' => $id) );
+        }
     }
 
     function setPassword($id, $pass) {
         $pass = strip_tags($pass);
 
-         $sql = "UPDATE `present_frame`.`users` SET `pass_hash` = :pass WHERE `id` = :id";
+        $sql = "UPDATE `present_frame`.`users` SET `pass_hash` = :pass WHERE `id` = :id";
 
         $query = $this->db->prepare($sql);
         return $query->execute( array(':pass' => $pass, ':id' => $id) );
+    }
+
+    function getFilteredUsers($name, $email, $isAdmin, $isDisabled) {
+        $name = strip_tags($name);
+        $email = strip_tags($email);
+        $isAdmin = strip_tags($isAdmin);
+        $isDisabled = strip_tags($isDisabled);
+
+        $data = array();
+
+        $sql = "SELECT u.id, u.username, u.email, u.create_time, u.admin, u.disabled FROM users u WHERE  1 = 1";
+        
+        if($name != null && $name != ''){
+            $sql .= " AND LOWER(u.username) = LOWER(:name)";
+            $data[':name'] = $name;
+        }
+
+        if($email != null && $email != '') {
+            $sql .= " AND LOWER(u.email) = LOWER(:email)";
+            $data[':email'] = $email;
+        }
+
+        if($isAdmin > -1) {
+            $sql .= " AND u.admin = :isAdmin";
+            $data[':isAdmin'] = $isAdmin;
+        } 
+
+        if($isDisabled > -1) {
+            $sql .= " AND u.disabled = :isDisabled";
+            $data[':isDisabled'] = $isDisabled;
+        }
+
+        $query = $this->db->prepare($sql);
+        $query->execute( $data );
+        return $query->fetchAll();   
     }
     
 

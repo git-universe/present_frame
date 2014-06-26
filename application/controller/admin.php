@@ -272,4 +272,92 @@ class Admin extends Controller
         require 'application/views/admin/slide.php';
         require 'application/views/_templates/footer.php';
     }
+
+    public function users() {
+        $lang_model = $this->loadModel('LangModel');
+        $user_model = $this->loadModel('UserModel');
+
+        $username = null;
+        $email = null;
+        $isAdmin = -1;
+        $isDisabled = -1;
+
+        if(isset($_POST['form_type'])) {
+            //var_dump($_POST);
+
+            if( $_POST['form_type'] == "filter_users" ) {
+                $username = $_POST['inputName'];
+                $email = $_POST['inputEmail'];
+                $isAdmin = $_POST['selectAdmin'];
+                $isDisabled = $_POST['selectDisabled'];
+            }
+        }
+
+        $users = $user_model->getFilteredUsers($username, $email, $isAdmin, $isDisabled);
+
+        require 'application/views/admin/header.php';
+        require 'application/views/admin/users.php';
+        require 'application/views/_templates/footer.php';
+    }
+
+    public function user($id = null) {
+        $lang_model = $this->loadModel('LangModel');
+        $user_model = $this->loadModel('UserModel');
+
+        /**
+         * @var array $errors Collection of error messages
+         */
+        $errors = array();
+
+        /**
+         * @var array $messages Collection of success / neutral messages
+         */
+        $messages = array();
+
+        $userDetails = $user_model->getUserDetailsById( $id );
+
+        if (isset($_POST["form_type"])) {
+            
+            if($_POST["form_type"] == "editUser") {
+                $username = $_POST['user_name'];
+                $email = $_POST['user_email'];
+                $isAdmin = ( isset($_POST['checkAdmin']) ? 1 : 0 );
+                $isDisabled = ( isset($_POST['checkDisabled']) ? 1 : 0 ) ;
+
+                if(count($errors) == 0) {
+
+                    if( $user_model->setUserDetails($id, $username, $email, $isAdmin, $isDisabled) ) {
+                        array_push ( $messages , "User profile updated successfully." );
+                        $userDetails = $user_model->getUserDetailsById( $id );
+                    } else {
+                        array_push ( $errors , "User profile was not updated. Please try again later..." );
+                    }
+
+                }
+            } else if ($_POST["form_type"] == "newPassword"){
+                $pass = $_POST['user_password_new'];
+                $passRepeat = $_POST['user_password_repeat'];
+
+                if($pass != $passRepeat){
+                    array_push ( $errors , "Passwords are not matching!" );
+                } else {
+                    $passHashed = $user_model->password_hash($pass, PASSWORD_DEFAULT);
+                }
+
+                if(count($errors) == 0) {
+
+                    if( $user_model->setPassword($userDetails->id, $passHashed) ) {
+                        array_push ( $messages , "Password updated successfully." ); 
+                    } else {
+                        array_push ( $errors , "Password was not updated. Please try again later..." );
+                    }
+
+                }
+            }
+        }
+
+        require 'application/views/admin/header.php';
+        require 'application/views/admin/user.php';
+        require 'application/views/_templates/footer.php';
+    }
 }

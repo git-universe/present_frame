@@ -11,5 +11,8 @@
 	 	<a href="<?php echo URL . $_SESSION['lang']; ?>/admin/presentations" class="list-group-item">
 	    	Edit presentations
 	 	</a>
+	 	<a href="<?php echo URL . $_SESSION['lang']; ?>/admin/users" class="list-group-item">
+	    	Edit users
+	 	</a>
 	</div>
 </div>

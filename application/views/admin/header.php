@@ -62,6 +62,12 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>/admin/users">
+                        Edit users
+                    </a>
+                </li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

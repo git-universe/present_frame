@@ -50,7 +50,7 @@ class User extends Controller
 
                 if(count($errors) == 0) {
 
-                    if( $user_model->setUserDetails($userDetails->id, $_POST['user_name'], $_POST['user_email']) ) {
+                    if( $user_model->setUserDetails($userDetails->id, $username, $email) ) {
                         array_push ( $messages , $lang_model->translate("User profile updated successfully.") ); //translate!
                         $_SESSION['username'] = $username;
                         $userDetails = $user_model->getUserDetails( $_SESSION['username'] );
