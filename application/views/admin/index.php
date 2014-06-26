@@ -14,5 +14,8 @@
 	 	<a href="<?php echo URL . $_SESSION['lang']; ?>/admin/users" class="list-group-item">
 	    	Edit users
 	 	</a>
+	 	<a href="<?php echo URL . $_SESSION['lang']; ?>/admin/translations" class="list-group-item">
+	    	Edit UI translations
+	 	</a>
 	</div>
 </div>

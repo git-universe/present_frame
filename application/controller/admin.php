@@ -12,7 +12,9 @@ class Admin extends Controller
 {
 
     function __construct() {
-        if(!isset($_SESSION['username']) ) {
+        //var_dump($_SESSION);
+
+        if(!isset($_SESSION['username']) && !isset($_SESSION['admin']) && $_SESSION['admin'] == false ) {
             header("Location: " . URL . $_SESSION['lang']);
             die();
         }
@@ -358,6 +360,50 @@ class Admin extends Controller
 
         require 'application/views/admin/header.php';
         require 'application/views/admin/user.php';
+        require 'application/views/_templates/footer.php';
+    }
+
+    public function translations(){
+        $lang_model = $this->loadModel('LangModel');
+
+        $mainTranslations = $lang_model->getMainTranslations();
+
+        require 'application/views/admin/header.php';
+        require 'application/views/admin/translations.php';
+        require 'application/views/_templates/footer.php';
+    }
+
+    public function translation($id = null){
+        $lang_model = $this->loadModel('LangModel');
+
+        $translations = $lang_model->getTranslationsDetails($id);
+
+        /**
+         * @var array $errors Collection of error messages
+         */
+        $errors = array();
+
+        /**
+         * @var array $messages Collection of success / neutral messages
+         */
+        $messages = array();
+
+        if( isset($_POST['form_type']) && $_POST['form_type'] === 'editTranslations' ) {
+
+            foreach ($translations as &$t) {
+                                 //setTranslation($translation, $langId, $parentId, $id)
+                if ( !$lang_model->setTranslation($_POST['input_translation_' . $t->short], $t->lang_id, $id, $t->id) ) {
+                    array_push($errors, 'Could not update translation for '. $t->short .' language!');
+                } else {
+                    array_push($messages, 'Successfully updated translation for '. $t->short .' language.');
+                }
+            }
+
+            $translations = $lang_model->getTranslationsDetails($id);
+        }
+
+        require 'application/views/admin/header.php';
+        require 'application/views/admin/translation.php';
         require 'application/views/_templates/footer.php';
     }
 }

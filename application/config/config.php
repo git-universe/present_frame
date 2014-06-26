@@ -44,3 +44,5 @@ define('LANGUAGES', serialize (
 
 define('PASSWORD_BCRYPT', 1);
 define('PASSWORD_DEFAULT', PASSWORD_BCRYPT);
+
+define('INSERT_UNKNOWN_TRANSLATIONS', true);

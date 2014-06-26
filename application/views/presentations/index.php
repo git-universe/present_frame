@@ -4,31 +4,31 @@
 
 	<div class="panel panel-info">
 	  	<div class="panel-heading clickable">
-	    	<h3 class="panel-title">Filter presentations</h3>
+	    	<h3 class="panel-title"><?php echo $lang_model->translate('Filter presentations')?></h3>
 	    	<span class="pull-right "><i class="glyphicon glyphicon-chevron-down"></i></span>
 	  	</div>
 	  	<div class="panel-body">
 	    	<div class="form-horizontal">
   				<fieldset>
   					<div class="form-group">
-			      		<label for="inputName" class="col-lg-2 control-label">Name</label>
+			      		<label for="inputName" class="col-lg-2 control-label"><?php echo $lang_model->translate('Name')?></label>
 			      		<div class="col-lg-10">
-        					<input class="form-control" id="inputName" placeholder="Presentation name" type="text">
+        					<input class="form-control" id="inputName" placeholder="<?php echo $lang_model->translate('Presentation name')?>" type="text">
       					</div>
    					</div>
 
    					<div class="form-group">
-   						<label for="inputDescription" class="col-lg-2 control-label">Description</label>
+   						<label for="inputDescription" class="col-lg-2 control-label"><?php echo $lang_model->translate('Description')?></label>
 			      		<div class="col-lg-10">
-        					<input class="form-control" id="inputDescription" placeholder="Presentation description" type="text">
+        					<input class="form-control" id="inputDescription" placeholder="<?php echo $lang_model->translate('Presentation description')?>" type="text">
       					</div>
    					</div>
 
    					<div class="form-group">
-   						<label for="selectCategory" class="col-lg-2 control-label">Category</label>
+   						<label for="selectCategory" class="col-lg-2 control-label"><?php echo $lang_model->translate('Category')?></label>
 			      		<div class="col-lg-10">
 					        <select class="form-control" id="selectCategory">
-					          	<option value="all">All</option>
+					          	<option value="all"><?php echo $lang_model->translate('All')?></option>
 					          	<?php foreach ($categories as &$c) { ?>
 					          		<option value="<?php echo $c->id ?>"><?php echo $c->name ?></option>
 					          	<?php } ?>
@@ -38,8 +38,8 @@
 
    					<div class="form-group">
       					<div class="col-lg-7 col-lg-offset-5">
-        					<button onClick="reset()" class="btn btn-default">Reset</button>
-        					<button onClick="filter()" class="btn btn-primary">Submit</button>
+        					<button onClick="reset()" class="btn btn-default"><?php echo $lang_model->translate('Reset')?></button>
+        					<button onClick="filter()" class="btn btn-primary"><?php echo $lang_model->translate('Submit')?></button>
       					</div>
     				</div>
   				</fieldset>
@@ -51,16 +51,16 @@
 	  	<thead>
 	    	<tr>
 	      		<th>
-	      			Name
+	      			<?php echo $lang_model->translate('Name')?>
 	      		</th>
 	      		<th>
-	      			Description
+	      			<?php echo $lang_model->translate('Description')?>
 	      		</th>
 	      		<th>
-	      			Category
+	      			<?php echo $lang_model->translate('Category')?>
 	      		</th>
 	      		<th>
-	      			Slides count
+	      			<?php echo $lang_model->translate('Slides count')?>
 	      		</th>
 	    	</tr>
 	  	</thead>

@@ -68,6 +68,12 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="<?php echo URL . $_SESSION['lang']; ?>/admin/translations">
+                        Edit UI translations
+                    </a>
+                </li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

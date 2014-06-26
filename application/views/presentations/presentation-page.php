@@ -50,11 +50,20 @@
 		<div id="comments">
 			<?php foreach ($comments as &$c) { ?>
 			<div class="text-center well well-sm" id="cmnt-<?php echo $c->id?>">
-					<?php if(isset($_SESSION['username']) && $c->username == $_SESSION['username']) { ?>
-						<button type="button" class="btn btn-primary btn-sm pull-right editComment">
-							<span class="glyphicon glyphicon-pencil"></span>
-						</button>
-					<?php } ?>
+					<div class="pull-right">
+						<?php if( (isset($_SESSION['username']) && $c->username == $_SESSION['username']) 
+							|| (isset($_SESSION['admin']) && $_SESSION['admin'] == true) ) { ?>
+							<button type="button" class="btn btn-primary btn-sm editComment">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+						<?php } ?>
+
+						<?php if( isset($_SESSION['admin']) && $_SESSION['admin'] == true ) {?>
+							<button type="button" class="btn btn-warning btn-sm deleteComment">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+						<?php }?>
+					</div>
 
 					<span class="text-primary pull-left"><?php echo date("H:i, d. m. Y", strtotime($c->posted))?> - <b class="text-info"><?php echo $c->username?></b> :</span>
 					

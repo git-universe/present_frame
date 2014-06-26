@@ -3,6 +3,8 @@ $(function() {
 	$('#editCommentForm').submit(commentEdit);
 
 	$('.editComment').click(commentEditModal);
+
+	$('.deleteComment').click(commentDelete);
 });
 
 function commentSubmit() {
@@ -42,9 +44,14 @@ function submitSuccess(data) {
 	var i = formattedDate.getMinutes();
 
 	var html = "<div id='cmnt-"+data+"' class='text-center well well-sm'> " +
-						"<button type='button' class='btn btn-primary btn-sm pull-right editComment'> " +
-							"<span class='glyphicon glyphicon-pencil'></span> "+
-						"</button> "+
+						"<div class='pull-right'> " +
+							"<button type='button' class='btn btn-primary btn-sm editComment'> " +
+								"<span class='glyphicon glyphicon-pencil'></span> "+
+							"</button> "+
+							"<button type='button' class='btn btn-warning btn-sm deleteComment'> " +
+								"<span class='glyphicon glyphicon-remove'></span> " +
+							"</button> " +
+						"</div> " +
 						"<span class='text-primary pull-left'> " +
 							M+":"+i+", "+d+". "+m+". "+y + " - <b class='text-info'>" + $('#userName').val() +"</b> : "+
 						"</span> "+
@@ -56,6 +63,8 @@ function submitSuccess(data) {
 	$('#commentForm').get(0).reset();
 
 	$('.editComment').click(commentEditModal);
+
+	$('.deleteComment').click(commentDelete);
 }
 
 function submitFail() {
@@ -100,8 +109,43 @@ function editFail(data) {
 	console.log("Failed to delete comment!");
 }
 
+function commentDelete(btn) {
+	var comment = $(btn.target).parent().parent().find(".comment").attr('id');
+	var data = {
+		"type": "delete",
+		"commentId": comment
+	};
+
+	console.log(data);
+
+	$.ajax({
+		type: 'POST',
+		url: '../../ajax/comment',
+		data: data,
+		headers: {
+			'X-Requested-With': 'XMLHttpRequest'
+		},
+		success: deleteSuccess,
+		error: deleteFail
+	});
+
+	return false;
+
+	console.log($comment);
+}
+
+function deleteSuccess(data) {
+	var id = $.parseJSON(data);
+	console.log("Comment "+id+" successfuly deleted!");
+	$('#cmnt-'+id).remove();
+}
+
+function deleteFail(data) {
+	console.log("Failed to delete comment!");
+}
+
 function commentEditModal(btn) {
-	var $comment = $(btn.target).parent().find(".comment");
+	var $comment = $(btn.target).parent().parent().find(".comment");
 	$('#textComment').val( $comment.text() );
 	$('#commentId').val( $comment.attr('id') );
 

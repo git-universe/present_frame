@@ -57,4 +57,14 @@ class CommentModel
         
         return $query->execute( array(':comment' => $comment, ':commentId' => $commentId) );
     }
+
+     public function deleteComment($commentId) {
+        $presentationId = strip_tags($commentId);
+
+        $sql = "DELETE FROM comments WHERE id = :commentId;";
+
+        $query = $this->db->prepare($sql);
+        
+        return $query->execute( array(':commentId' => $commentId) );
+    }
 }

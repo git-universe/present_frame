@@ -33,7 +33,7 @@ class Ajax extends Controller
                     } else {
                         header('HTTP/1.1 500 Internal Server Error');
                         header('Content-Type: application/json; charset=UTF-8');
-                        die(json_encode(array('message' => 'Could not insert new comment', 'code' => 1337)));
+                        die(json_encode(array('message' => 'Could not insert new comment')));
                     }
                     break;
 
@@ -43,7 +43,17 @@ class Ajax extends Controller
                     } else {
                         header('HTTP/1.1 500 Internal Server Error');
                         header('Content-Type: application/json; charset=UTF-8');
-                        die(json_encode(array('message' => 'Could not update comment', 'code' => 1337)));
+                        die(json_encode(array('message' => 'Could not update comment')));
+                    }
+                    break;
+
+                case 'delete':
+                    if ( $comment_model->deleteComment($_POST['commentId']) ){
+                        echo json_encode($_POST['commentId']);
+                    } else {
+                        header('HTTP/1.1 500 Internal Server Error');
+                        header('Content-Type: application/json; charset=UTF-8');
+                        die(json_encode(array('message' => 'Could not delete comment')));
                     }
                     break;
             }

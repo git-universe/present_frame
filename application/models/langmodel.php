@@ -22,7 +22,15 @@ class LangModel
     public function translate($expression)
     {
         if ($_SESSION['lang'] == LANG) {
+            
+            if (INSERT_UNKNOWN_TRANSLATIONS) {
+                if(!$this->isTranslation($expression)) {
+                    $this->newTranslation($expression, LANG, null);
+                }
+            }
+
             return $expression;
+
         } else {
             $sql = "SELECT COALESCE(t.translation, 'N/A' ) AS translation
                     FROM translations t
@@ -142,4 +150,103 @@ class LangModel
         return $query->execute( array(':name' => $translation, ':catId' => $catId, ':langId' => $langId) );
     }
 
+    public function newTranslation($translation, $langId) {
+        $translation = strip_tags($translation);
+        $langId = strip_tags($langId);
+
+        $sql = "INSERT INTO `present_frame`.`translations`
+                    (`id`, `translation`, `languages_id`, `translations_id`)
+                    VALUES
+                    (null, :translation, (SELECT id FROM languages WHERE short = :langId), null);";
+
+
+        $query = $this->db->prepare($sql);
+        return $query->execute( array(':translation' => $translation, ':langId' => $langId) );
+    }
+
+    public function getMainTranslations() {
+        $sql = "SELECT * FROM translations WHERE translations_id IS NULL;";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getTranslationsForParent($parentId) {
+        $sql = "SELECT * FROM languages l
+            LEFT OUTER JOIN translations t ON t.languages_id = l.id 
+            AND t.translations_id = :parentId
+            WHERE l.short != :lang";
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':parentId' => $parentId, ':lang' => LANG) );
+        return $query->fetchAll();
+    }
+
+    public function getTranslationsDetails($id) {
+        $id = strip_tags($id);
+
+        $sql = "SELECT l.id AS lang_id, l.name, l.short, t.id, t.translation, t.languages_id, t.translations_id FROM languages l
+                    LEFT OUTER JOIN translations t ON t.languages_id = l.id 
+                    AND (t.translations_id = :id OR t.id = :id)";
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':id' => $id, ':id' => $id) );
+        return $query->fetchAll();
+    }
+
+    public function setTranslation($translation, $langId, $parentId, $id) {
+        $translation = strip_tags($translation);
+        $parentId = strip_tags($parentId);
+        $langId = strip_tags($langId);
+        $id = strip_tags($id);
+
+
+
+        if( $this->isTranslationForId($id) ) {
+            $sql = "UPDATE `translations`
+                SET `translation` = :translation
+                WHERE `id` = :id";
+
+            $query = $this->db->prepare($sql);
+            return $query->execute( array(':translation' => $translation, ':id' => $id) );
+        } else {
+            $sql = "INSERT INTO `present_frame`.`translations`
+                    (`id`, `translation`, `languages_id`, `translations_id`)
+                    VALUES
+                    (null, :translation, :langId, :parentId);";
+
+            $query = $this->db->prepare($sql);
+            return $query->execute( array(':translation' => $translation, ':langId' => $langId, ':parentId' => $parentId) );
+        }
+    }
+
+    private function isTranslation($expression) {
+        $expression = strip_tags($expression);
+
+        $sql = "SELECT id FROM translations
+                WHERE translation = :expression;";
+
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':expression' => $expression) );
+        
+        if( $query->rowCount() > 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function isTranslationForId($id) {
+        $id = strip_tags($id);
+
+        $sql = "SELECT id FROM translations
+                WHERE id = :id;";
+
+        $query = $this->db->prepare($sql);
+        $query->execute( array(':id' => $id) );
+        
+        if( $query->rowCount() > 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
