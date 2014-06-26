@@ -30,6 +30,8 @@
 
   <!-- Required Modernizr file -->
   <script src="<?php echo URL; ?>public/lib/deck.js/modernizr.custom.js"></script>
+
+  <link rel="shortcut icon" href="<?php echo URL; ?>public/img/favicon.ico" />
 </head>
 <body>
   

@@ -36,6 +36,7 @@ class Login extends Controller
 
                 if($user != false && !isset($_SESSION['username'])) {
                     if($user->disabled == false) {
+                        $_SESSION['userId'] = $user->id;
                         $_SESSION['username'] = $user->username;
                         $_SESSION['admin'] = $user->admin;
                         header("Location: " . URL . $_SESSION['lang']);

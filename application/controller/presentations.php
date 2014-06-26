@@ -35,10 +35,15 @@ class Presentations extends Controller
         $details = $present_model->getDetails($id);
 
         if ($fullPage == 'full') {
-             $slides = $slide_model->getSlides($id);
+
+            $slides = $slide_model->getSlides($id);
 
             require 'application/views/presentations/presentation.php';
         } else {
+            $comment_model = $this->loadModel('CommentModel');
+
+            $comments = $comment_model->getComments($id);
+
             require 'application/views/_templates/header.php';
             require 'application/views/presentations/presentation-page.php';
             require 'application/views/_templates/footer.php';
