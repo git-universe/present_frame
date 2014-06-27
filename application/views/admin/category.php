@@ -14,7 +14,7 @@
 	    </div>
 	<?php } ?>
 
-	<form method="post" action="" name="loginform" class="form-horizontal">
+	<form method="post" action="<?php echo ( !is_null($id) && $id !== 'new' ? URL.$_SESSION['lang'].'/admin/category/'.$id : '' ) ?>" name="loginform" class="form-horizontal">
 		<input name="form_type" type="hidden" value="<?php echo ( isset($catDetails) ) ? 'edit' : 'new' ?>_category">
 		<fieldset>
 		    <legend> <?php echo ($id == 'new' ? 'NewCategory' : 'Edit category'); ?> </legend>

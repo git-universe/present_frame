@@ -119,7 +119,7 @@ class Admin extends Controller
                     array_push($errors, 'Could not create category '. $_POST['category_name'] .'!');
                 } else {
                     array_push($messages, 'Successfully created category '. $_POST['category_name'] .'.');
-                    $langId = $temp;
+                    $id = $temp;
                 }
             } else if($_POST['form_type'] == "edit_category") {
                 $temp = $cat_model->updateCategory($id, $_POST['category_name'], $_POST['category_priority'], $_POST['category_parent']);
@@ -128,7 +128,6 @@ class Admin extends Controller
                     array_push($errors, 'Could not update category '. $_POST['category_name'] .'!');
                 } else {
                     array_push($messages, 'Successfully updated category '. $_POST['category_name'] .'.');
-                    $langId = $temp;
                 }
             }
 
