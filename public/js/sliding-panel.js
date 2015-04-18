@@ -9,7 +9,7 @@ $('.clickable').on('click', function (e) {
     $this.removeClass('panel-collapsed');
     $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
   }
-});
+})
 
 $( document ).ready(function() {
   $('.clickable').parents('.panel').find('.panel-body').slideUp();
